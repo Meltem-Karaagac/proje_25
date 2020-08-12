@@ -1,0 +1,87 @@
+LEFT JOIN
+________________________________________________
+
+SELECT artists.Name as artists_Name, artists.ArtistId, albums.AlbumId,albums.Title as albums_Title
+FROM artists
+LEFT JOIN albums on artists.ArtistId=albums.ArtistId;
+
+
+SELECT artists.*, albums.Title
+FROM artists
+LEFT JOIN albums on artists.ArtistId=albums.ArtistId;
+
+SELECT *
+FROM artists
+LEFT JOIN albums on artists.ArtistId=albums.ArtistId;
+
+
+SUBQUERY (INNER/NESTED QUERY): dış sorguya bir değer döndürür. parantez içinde olur. select, from ve where içinde kullanılabilir.single-row, multiple-row, correlate subquery olarak 3 çeşittir.
+single -row: tek satır, tek sutun döndürür, yani değer döndürür, genelde where de kullanılır.
+__________________________________
+
+SELECT t.name, t.TrackId, a.AlbumId
+FROM tracks t
+JOIN albums a on a.AlbumId=t.AlbumId
+where a.Title="Faceless";
+
+dff
+
+==
+
+SELECT TrackId, name, AlbumId
+from tracks
+WHERE AlbumId = (
+	SELECT albums.AlbumId
+	from albums
+	where albums.Title = 'Faceless')
+
+________________
+CREATE TABLE vacation_plan
+(place_id INT,
+country TEXT,
+hotel_name TEXT,
+employee_Id INT,
+vacation_length INT,
+budget REAL
+);
+
+INSERT INTO vacation_plan(place_id,country,hotel_name,employee_Id,vacation_length,budget)
+	VALUES (1,"Canada","Hilton",1,5,10000);
+
+INSERT INTO vacation_plan(place_id,country,hotel_name,employee_Id,vacation_length,budget)
+	VALUES (3,"Germany","Swiss",1,3,7000),
+		(4,"Turkey","Swiss",2,4,5000);
+
+DELETE FROM vacation_plan;
+
+DELETE FROM vacation_plan
+WHERE place_id=3;
+
+
+DROP TABLE vacation_plan;
+
+CREATE TABLE vacation_plan(
+	place_id INT PRIMARY KEY,
+	country TEXT,
+	hotel_name TEXT NOT NULL,
+	EmployeeId INT,
+	vacation_length INT,
+	budget REAL,
+	FOREIGN KEY(EmployeeId)
+	REFERENCES employees(EmployeeId)
+	);
+
+
+ALTER TABLE vacation_plan
+ADD city TEXT;
+
+
+DROP TABLE vacation_plan;
+
+(SQLLite de bu çalışmaz)
+ALTER TABLE vacation_plan
+DROP hotel_name;
+
+(SQLLite de bu çalışmaz)
+ALTER TABLE vacation_plan
+MODIFY COLUMN budget INT;
